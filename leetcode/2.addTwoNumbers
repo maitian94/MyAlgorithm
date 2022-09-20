@@ -40,8 +40,9 @@ class Solution(object):
         str1 = self.deal_l1(l1)
         str2 = self.deal_l2(l2)
         ou_st = str(int(str1) + int(str2))[::-1]
-        result = ListNode()
-        current = result
+        result = ListNode()   
+        current = result   # 这里的result和current都指向同一个空的链表头结点，后续for循环的时候
+        # 遍历ou_st的元素，相当于把这个空的链表串了起来，因此最后return要取result.next
         for i in ou_st:
             t = ListNode(i)
             current.next = t
