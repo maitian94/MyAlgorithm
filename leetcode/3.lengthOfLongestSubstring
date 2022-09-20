@@ -1,0 +1,26 @@
+# -*- coding: utf-8 -*-
+# @Time : 2022/9/8 17:01
+
+
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        if not s:
+            return 0
+        dic = {}
+        j = 0
+        length = len(s)
+        while j < length:
+            new_s = s[j:]
+            ou_st = ''
+            for i in new_s:
+                if i in ou_st:
+                    break
+                else:
+                    ou_st += i
+            dic[len(ou_st)] = ou_st
+            j += 1
+        print(dic)
+        return max(dic.keys())
+
+a = Solution()
+print(a.lengthOfLongestSubstring('abcabcbb'))
