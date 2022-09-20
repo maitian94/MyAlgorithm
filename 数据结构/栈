@@ -1,0 +1,34 @@
+# -*- coding: utf-8 -*-
+
+
+# 栈：后进先出
+class MyStack:
+
+    def __init__(self):
+        self.stack = []
+
+    # 出栈
+    def pop(self):
+        if self.stack:
+            return self.stack.pop()
+        else:
+            raise IndexError
+
+    # 入栈
+    def push(self, element):
+        self.stack.append(element)
+
+    #获取栈顶元素
+    def get_top(self):
+        if self.stack:
+            return self.stack[-1]
+        else:
+            raise IndexError
+
+
+stack = MyStack()
+stack.push(3)
+print(stack.pop())
+print(stack.pop())
+
+
