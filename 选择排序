@@ -1,0 +1,17 @@
+
+一趟排序记录最小的数，放到第一个位置
+再一趟排序记录列表无序区最小的数，放到第二个位置
+
+def select_sort(li):
+    for i in range(len(li)-1):
+        min_index = i
+        for j in range(i+1, len(li)):
+            if li[j] < li[min_index]:
+                min_index = j
+        if min_index != i:
+            li[i], li[min_index] = li[min_index], li[i]
+    return li
+
+
+
+li = [8,9,7,1,2,3,4,5]
