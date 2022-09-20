@@ -1,0 +1,58 @@
+# -*- coding: utf-8 -*-
+
+import random
+
+
+class Heap:
+    def __init__(self, li):  # high是堆的最后一个元素位置，low是堆的第一个元素位置
+        self.li = li
+        self.low = 0
+        self.high = len(li) - 1
+
+    # 创建堆
+    def create_heap(self):
+        n = len(self.li)
+        # 建堆过程是从最后一个子树开始，一个一个创建一个小堆的过程
+        # i表示每个子树的根节点
+        for i in range((n - 2) // 2, -1, -1):
+            self.sift(self.li, i, n-1)  # 这里的 n-数据结构与算法 并不对，这里应该是每个子堆的最后一个元素位置，而n-1指的是整个堆最后一个元素，但是并不影响
+        return self.li
+
+    # 堆排序
+    def heap_sort(self):
+        n = len(self.li)
+        # i指的是堆的最后一个元素的位置
+        for i in range(n - 1, -1, -1):
+            self.li[0], self.li[i] = self.li[i], self.li[0]
+            self.sift(self.li, 0, i - 1)
+
+    # 向下调整,假设左右子树都是堆，但自身不是堆
+    def sift(self, li, low, high):  # high是堆的最后一个元素位置，low是堆的第一个元素位置
+        i = low  # i刚开始指向堆顶
+        j = 2 * i + 1  # j 指向左孩子节点
+        tmp = self.li[i]  # 把堆顶的元素存起来
+        while j <= high:
+            if j + 1 <= high and self.li[j] < self.li[j + 1]:  # 如果右孩子有且比较大，让j指向右孩子
+                j = j + 1
+            if self.li[j] > tmp:  # j指向的元素和tmp做比较，大的话就把i的位置让给j，然后循环进入下一层
+                self.li[i] = self.li[j]
+                i = j
+                j = 2 * i + 1
+            else:
+                self.li[i] = tmp
+                break
+        else:  # while循环正常被执行完，没有被break,就会执行else
+            self.li[i] = tmp
+
+
+li = [_ for _ in range(11)]
+random.shuffle(li)
+print(li)
+
+heap = Heap(li)
+li = heap.create_heap()
+print(li)
+heap.heap_sort()
+print(li)
+
+
