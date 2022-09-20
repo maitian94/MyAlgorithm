@@ -1,0 +1,39 @@
+
+
+class Solution:
+    # 暴力算法
+    def twoSum1(self, nums, target):
+        for i in range(len(nums)-1):
+            for j in range(i+1, len(nums)):
+                if nums[i] + nums[j] == target:
+                    return i, j
+
+    # 字典
+    def twoSum2(self, nums, target):
+        dic = {}
+        for i in range(len(nums)):
+            if target - nums[i] not in dic:
+                dic[nums[i]] = i
+            else:
+                return dic[target - nums[i]], i
+
+
+
+    def test(self, nums, target):
+        for index in range(len(nums)):
+            try:
+                other_index = nums.index(target - nums[index])
+            except:
+                continue
+            if target - nums[index] in nums and index != other_index:
+                return [index, other_index] if index < other_index else [
+                    other_index, index]
+
+
+nums = [2, 7, 11, 15]
+target = 9
+s = Solution()
+s.twoSum1(nums, target)
+
+
+
