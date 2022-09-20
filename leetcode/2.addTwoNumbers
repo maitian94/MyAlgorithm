@@ -1,0 +1,73 @@
+# -*- coding: utf-8 -*-
+# @Time : 2022/9/7 15:23
+
+# class Solution(object):
+#     def addTwoNumbers(self, l1, l2):
+#         """
+#         :type l1: ListNode
+#         :type l2: ListNode
+#         :rtype: ListNode
+#         """
+#         pass
+#
+#
+# l1 = [2,4,3]
+# l2 = [5,6,4]
+# s = Solution()
+# print(s.addTwoNumbers(l1, l2))
+
+class ListNode(object):
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+class ListNode(object):
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+class Solution(object):
+    def addTwoNumbers(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        # current = l1.next
+        # print(current.next.val)
+        str1 = self.deal_l1(l1)
+        str2 = self.deal_l2(l2)
+        ou_st = str(int(str1) + int(str2))[::-1]
+        result = ListNode()
+        current = result
+        for i in ou_st:
+            t = ListNode(i)
+            current.next = t
+            current = current.next
+        return result.next
+
+    def deal_l1(self, l1):
+        str1 = str(l1.val)
+        current = l1.next
+        while True:
+            if not current:
+                break
+            else:
+                str1 += str(current.val)
+                current = current.next
+        return str1[::-1]
+
+    def deal_l2(self, l2):
+        str2 = str(l2.val)
+        current = l2.next
+        while True:
+            if not current:
+                break
+            else:
+                str2 += str(current.val)
+                current = current.next
+        return str2[::-1]
+
+
