@@ -1,0 +1,19 @@
+def bubble_sort(li):
+    for i in range(len(li)-1):
+        flag = True
+        for j in range(len(li)-i-1):
+            if li[j] > li[j+1]:
+                li[j], li[j+1] = li[j+1], li[j]
+                flag = False
+        # print(li)
+        if flag:   # 如果一趟排序位置没有发生变化，则说明已经有序，后序循环可以结束
+            return li
+    return li
+
+
+import random
+li = [9,8,7,1,2,3,4,5]
+# random.shuffle(li)
+# print(li)
+li = bubble_sort(li)
+# print(li)
