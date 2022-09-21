@@ -1,0 +1,33 @@
+
+
+# -*- coding: utf-8 -*-
+
+s[0][0] = s[1][0] = s[2][0]
+s[0][1] = s[1][1] = s[2][1]
+
+class Solution(object):
+    def longestCommonPrefix(self, s):
+        index1, index2 = 0, 0
+        ou_st = ''
+        min_length = len(sorted(s, key=len)[0])
+        now_st = s[index1][index2]
+        while index2 < min_length:
+            while index1 < len(s) - 1:
+                index1 += 1
+                if s[index1][index2] != now_st:
+                    break
+            if s[index1][index2] != now_st:
+                break
+            index1 = 0
+            index2 += 1
+            ou_st += now_st
+            now_st = s[index1][index2]
+        return ou_st
+
+
+
+s = ['flower', 'flow', 'flight']
+s = ['dog', 'cat']
+a = Solution()
+print(a.longestCommonPrefix(s))
+
