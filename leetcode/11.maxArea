@@ -1,0 +1,25 @@
+
+
+class Solution(object):
+    def maxArea(self, height):
+        global_max_area = 0
+        for index in range(len(height)):
+            one_max_area = self.one_max_area(height, index, index + 1)
+            if one_max_area > global_max_area:
+                global_max_area = one_max_area
+        return global_max_area
+
+
+    def one_max_area(self, height, left, right):
+        one_max_area = 0
+        while right < len(height):
+            area = min(height[left], height[right]) * (right - left)
+            right += 1
+            if area > one_max_area:
+                one_max_area = area
+        return one_max_area
+
+
+height = [1, 8, 6, 2, 5, 4, 8, 3, 7]
+s = Solution()
+print(s.maxArea(height))
