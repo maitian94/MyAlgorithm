@@ -12,3 +12,14 @@ class Solution:
             if res > max_num - 1:
                 res = 0
         return res
+
+
+
+
+321  -- >> 123
+x = abs(x)
+num = 0
+while x != 0:
+    temp = x % 10
+    num = temp + num * 10
+    x //= 10
