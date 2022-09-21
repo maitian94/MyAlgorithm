@@ -1,0 +1,15 @@
+
+
+0-9的asill码是48-57
+ord('1)
+ord('-') = 45
+
+s = s.strip()
+ou_st = ''
+for val in s:
+  if not 48<=ord(val)<=57:
+      break
+  ou_st += val
+  print(int(ou_st))
+  
+      
