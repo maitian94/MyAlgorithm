@@ -1,0 +1,21 @@
+方法一
+
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+
+        num = 0
+        a = abs(x)
+
+        while a != 0:
+            temp = a % 10
+            num = temp + num * 10
+            a //= 10
+        if x < 0:
+            return False
+        
+        if x == num:
+            return True
+        
+        return False
+
+
