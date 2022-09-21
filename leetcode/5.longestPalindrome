@@ -4,20 +4,19 @@
 
 class Solution:
     def longestPalindrome(self, s: str) -> str:
-        length = 1
         longest_palindrome = ''
         for index in range(len(s)):
-            if len(s) % 2 == 0:
-                result = self.get_longest_palindrome(s, index, index)
-                length = len(result)
-                if length > len(longest_palindrome):
-                    longest_palindrome = result
-            else:
-                result = self.get_longest_palindrome(s, index, index + 1)
-                length = len(result)
-                if length > len(longest_palindrome):
-                    longest_palindrome = result
-        return len(longest_palindrome)
+            result1 = self.get_longest_palindrome(s, index, index + 1)
+            len1 = len(result1)
+            if len1 > len(longest_palindrome):
+                longest_palindrome = result1
+            result2 = self.get_longest_palindrome(s, index, index)
+            len2 = len(result2)
+            if len2 > len(longest_palindrome):
+                longest_palindrome = result2
+        if not longest_palindrome:
+            return s[0]
+        return longest_palindrome
 
 
     def get_longest_palindrome(self, s, left, right):
