@@ -1,0 +1,28 @@
+class Solution(object):
+    def threeSum(self, nums):
+        if len(nums) <= 3 and sum(nums) != 0:
+            return []
+        all_nums = []
+        for i in range(1, 2 ** (len(nums))):
+            st_bin = format(i,
+                            f'0{len(nums)}b')  # 转化成定长的二进制字符,二进制字符为1的
+            # 位置代表取数，通过这种方法可以拿到所有数的组合
+            one_nums = []
+            if st_bin.count('1') != 3:  # 忽略非三个数字的组合
+                continue
+            for index in range(len(st_bin)):  # 从所有组合里拿只包含三个数字的组合
+                if st_bin[index] == '1':
+                    one_nums.append(nums[index])
+            if sum(one_nums) != 0:  # 忽略和不为0的组合
+                continue
+            one_nums.sort()  # 排序完方便去重
+            if one_nums not in all_nums:
+                all_nums.append(one_nums)
+        return all_nums
+
+
+nums = [-1, 0, 1, 2, -1, -4]
+nums = [0, 1, 1]
+nums = [0, 0, 0]
+s = Solution()
+print(s.threeSum(nums))
