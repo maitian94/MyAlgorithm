@@ -10,19 +10,18 @@ class Solution(object):
         index1, index2 = 0, 0
         ou_st = ''
         min_length = len(sorted(s, key=len)[0])
-        now_st = s[index1][index2]
-        while index2 < min_length:
-            while index1 < len(s) - 1:
-                index1 += 1
-                if s[index1][index2] != now_st:
-                    break
-            if s[index1][index2] != now_st:
-                break
-            index1 = 0
-            index2 += 1
-            ou_st += now_st
-            now_st = s[index1][index2]
-        return ou_st
+        while True:
+
+            while index2 < min_length:
+                now_st = s[index1][index2]
+                while index1 < len(s):
+                    if s[index1][index2] != now_st:
+                        return ou_st
+                    index1 += 1
+                ou_st += now_st
+                index1 = 0
+                index2 += 1
+            return ou_st
 
 
 
