@@ -1,3 +1,6 @@
+
+只适合nums很短的情况，否则2 ** len(nums)太大
+
 class Solution(object):
     def threeSum(self, nums):
         if len(nums) <= 3 and sum(nums) != 0:
