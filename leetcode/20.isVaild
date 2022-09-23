@@ -1,0 +1,22 @@
+
+
+class Solution(object):
+    def isVaild(self, s):
+        relative_dic = {'(': ')', '{': '}', '[': ']'}
+        if len(s) <= 1:
+            return False
+        index = 0
+        while index < len(s):
+            if s[index] not in relative_dic.keys():
+                return False
+            if s[index + 1] != relative_dic[s[index]]:
+                return False
+            index += 2
+        return True
+
+
+st = '()[]{}'
+st = '()'
+st = '(]'
+S = Solution()
+print(S.isVaild(st))
