@@ -1,0 +1,17 @@
+class Solution:
+    def plusOne(self, digits):
+        for index in range(len(digits))[::-1]:
+            if digits[index] == 9:
+                digits[index] = 0
+            else:
+                digits[index] += 1
+                break
+        if digits[0] == 0:
+            digits.insert(0, 1)
+        return digits
+        
+
+s = Solution()
+digits = [9, 9, 9]
+# digits = [2, 3, 1, 5]
+print(s.plusOne(digits))
