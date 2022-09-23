@@ -1,5 +1,19 @@
 
 
+class Solution(object):
+    def longestCommonPrefix(self, s):
+        ou_st = ''
+        for i in range(len(s[0])):
+            set_ = set([string[i] for string in s])
+            if len(set_) == 1:
+                ou_st += s[0][i]
+            else:
+                break
+        return ou_st
+        
+        
+        
+
 # -*- coding: utf-8 -*-
 
 s[0][0] = s[1][0] = s[2][0]
