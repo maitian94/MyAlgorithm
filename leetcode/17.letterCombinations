@@ -9,24 +9,14 @@ class Solution(object):
              return []
          elif len(digits) == 1:
              return [i for i in rel_dic[digits]]
-         output = []
-         for two_val in self.get_two_vals(digits):
-             for val1 in two_val[0]:
-                 for val2 in two_val[1]:
-                     st = val1 + val2
-                     output.append(st)
+         output = [""]
+         for digit in digits:
+             tmp_list = []
+             for ch in rel_dic[digit]:
+                 for st in output:
+                     tmp_list.append(st + ch)
+             output = tmp_list
          return output
-
-
-    def get_two_vals(self, digits):
-        rel_dic = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl', '6': 'mno',
-                   '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
-        two_vals = []
-        for left_index in range(len(digits)):
-            for right_index in range(left_index + 1, len(digits)):
-                two_vals.append([rel_dic[digits[left_index]], rel_dic[digits[right_index]]])
-        return two_vals
-
 
 
 digits = '2'
