@@ -55,10 +55,11 @@ class Solution:
         for st in s:
             if st in relative_dic:
                 temp_li.append(st)
-            elif st != relative_dic[temp_li.pop()]:
+            elif len(temp_li) == 0 or st != relative_dic[temp_li.pop()]:
                 return False
+        if len(temp_li) != 0:
+            return False
         return True
-
 
 # leetcode submit region end(Prohibit modification and deletion)
 
