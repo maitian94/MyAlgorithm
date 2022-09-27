@@ -56,18 +56,21 @@
 #  
 #  Related Topics 数组 双指针 
 #  👍 1498 👎 0
+# 输入：nums = [0,1,2,2,3,0,4,2], val = 2
+# 输出：5, nums = [0,1,4,0,3]
 
 
 class Solution:
     def removeElement1(self, nums, val):
         if not nums:
             return 0
+
         count = -1
         for i in range(len(nums)):
             if nums[i] != val:
                 count += 1
                 nums[count] = nums[i]
-        return count+1
+        return count+1, nums[:count+1]
 
 
     def removeElement2(self, nums, val):
@@ -81,3 +84,7 @@ class Solution:
             else:
                 i += 1
         return i, nums
+
+
+s = Solution()
+print(s.removeElement1(nums=[0,1,2,2,3,0,4,2], val=2))
