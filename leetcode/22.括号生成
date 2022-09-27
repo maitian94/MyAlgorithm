@@ -1,0 +1,53 @@
+# 数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。 
+# 
+#  
+# 
+#  示例 1： 
+# 
+#  
+# 输入：n = 3
+# 输出：["((()))","(()())","(())()","()(())","()()()"]
+#  
+# 
+#  示例 2： 
+# 
+#  
+# 输入：n = 1
+# 输出：["()"]
+#  
+# 
+#  
+# 
+#  提示： 
+# 
+#  
+#  1 <= n <= 8 
+#  
+#  Related Topics 字符串 动态规划 回溯 
+#  👍 2878 👎 0
+
+
+# leetcode submit region begin(Prohibit modification and deletion)
+class Solution:
+    def generateParenthesis(self, n):
+        if n == 0:
+            return []
+        result = []
+        self.get_parenthesis(n, n, '', result)
+        return result
+
+    # left 表示左括号剩余的个数
+    # right 表示右括号剩余的个数
+    def get_parenthesis(self, left, right, st, result):
+        if left > right:  # 这种情况不符合括号要求, 比如())(
+            return ''
+        if left == 0 and right == 0:
+            result.append(st)
+        if left > 0:
+            self.get_parenthesis(left - 1, right, st + '(', result)
+        if right > 0:
+            self.get_parenthesis(left, right - 1, st + ')', result)
+
+
+s = Solution()
+s.generateParenthesis(2)
