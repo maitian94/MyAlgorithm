@@ -42,14 +42,16 @@
 class Solution:
     def searchRange(self, nums, target):
         num_index = self.get_num_index(nums, target)
-        if not num_index:
+        if num_index is None:
             return [-1, -1]
         left = num_index - 1
         right = num_index + 1
-        while nums[left] == target:
-            left -= 1
-        while nums[right] == target:
-            right += 1
+        while left >= 0 and right < len(nums):
+            if nums[left] == target:
+                left -= 1
+            if nums[right] == target:
+                right += 1
+            break
 
         return [left + 1, right - 1]
 
@@ -58,7 +60,7 @@ class Solution:
     def get_num_index(self, nums, target):
         left = 0
         right = len(nums) - 1
-        while left < right:
+        while left <= right:
             mid = (left + right) // 2
             if nums[mid] < target:
                 left = mid + 1
