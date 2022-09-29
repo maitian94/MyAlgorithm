@@ -37,6 +37,25 @@
 #  Related Topics 数组 二分查找 
 #  👍 1922 👎 0
 
+class Solution:
+    def searchRange(self, nums, target):
+        try:
+            return [nums.index(target), len(nums) - nums[::-1].index(target) - 1]
+        except:
+            return [-1, -1]
+
+
+class Solution:
+    def searchRange(self, nums, target):
+        from bisect import bisect_left, bisect_right
+        if not len(nums): return [-1, -1]
+        res = [-1, -1]
+        left = bisect_left(nums, target)
+        if left < len(nums) and nums[left] == target:
+            res[0] = left
+            res[1] = bisect_right(nums, target) - 1
+        return res
+
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
