@@ -1,0 +1,45 @@
+# -*- coding: utf-8 -*-
+
+
+import os
+import pandas as pd
+
+# AI数据提出方式：
+# 1.数据筛选D列、M列都选到AI然后把目前18个表格的数据提取出来汇总
+# 2.再用课程编码F、工号g、时长O联合去重，得到总学习时长
+# 3.基于第二步，学习时长数据按工号去重得到学习人数
+# 4.总学习时长/学习人数=人均学时长
+
+
+def get_time():
+    df_all = []
+    for file in ['file11.xlsx', 'file22.xlsx']:
+        print(f'开始读取{file}数据')
+        df_one = read_excel(file)
+        df_all.append(df_one)
+    # 合并多个文件数据
+    print('合并多个文件数据')
+    df_all = pd.concat(df_all)
+    df_all.to_excel('concat.xlsx')
+    # 联合三列去重
+    print('联合三列去重')
+    df_all.drop_duplicates(['course_team_code', 'emp_num', 'study_duration'], inplace=True)
+    all_study_duration = sum(df_all['study_duration'])
+    print(f'总学习时长为{all_study_duration}')
+    students_num = df_all.drop_duplicates(['emp_num']).shape[0]
+    print(f'总学习人数为{students_num}')
+    ave_study_duration = all_study_duration/students_num
+    print(f'平均学习时长为{ave_study_duration}')
+
+
+def read_excel(file):
+    one_file_data = pd.read_excel(file, header=0)
+    one_file_data = one_file_data.loc[one_file_data['course_type_lv2'] == 'AI']
+    one_file_data = one_file_data.loc[one_file_data['user_comes_from_ict2'] == 'AI']
+    return one_file_data
+
+
+
+
+
+
