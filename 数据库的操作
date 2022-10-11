@@ -1,0 +1,113 @@
+安装
+pip install mysql-connector
+
+创建数据库连接，然后查看下数据库的版本号，来验证下数据库是否连接成功。
+# -*- coding: UTF-8 -*-
+import mysql.connector
+# 打开数据库连接
+db = mysql.connector.connect(
+       host="localhost",
+       user="root",
+       passwd="XXX", # 写上你的数据库密码
+       database='wucai', 
+       auth_plugin='mysql_native_password'
+)
+# 获取操作游标 
+cursor = db.cursor()
+# 执行SQL语句
+cursor.execute("SELECT VERSION()")
+# 获取一条数据
+data = cursor.fetchone()
+print("MySQL版本: %s " % data)
+# 关闭游标&数据库连接
+cursor.close()
+db.close()
+
+上面这段代码中有两个重要的对象你需要了解下，分别是Connection和Cursor。
+
+Connection就是对数据库的当前连接进行管理，我们可以通过它来进行以下操作：
+
+通过指定host、user、passwd和port等参数来创建数据库连接，这些参数分别对应着数据库IP地址、用户名、密码和端口号；
+使用db.close()关闭数据库连接；
+使用db.cursor()创建游标，操作数据库中的数据；
+使用db.begin()开启事务；
+使用db.commit()和db.rollback()，对事务进行提交以及回滚。
+当我们通过cursor = db.cursor()创建游标后，就可以通过面向过程的编程方式对数据库中的数据进行操作：
+
+使用cursor.execute(query_sql)，执行数据库查询；
+使用cursor.fetchone()，读取数据集中的一条数据；
+使用cursor.fetchall()，取出数据集中的所有行，返回一个元组tuples类型；
+使用cursor.fetchmany(n)，取出数据集中的多条数据，同样返回一个元组tuples；
+使用cursor.rowcount，返回查询结果集中的行数。如果没有查询到数据或者还没有查询，则结果为-1，否则会返回查询得到的数据行数；
+使用cursor.close()，关闭游标。
+
+
+
+对数据表进行增删改查
+
+# 插入新球员
+sql = "INSERT INTO player (team_id, player_name, height) VALUES (%s, %s, %s)"
+val = (1003, "约翰-科林斯", 2.08)
+cursor.execute(sql, val)
+db.commit()
+print(cursor.rowcount, "记录插入成功。")
+cursor.close()
+db.close()
+
+
+
+如何使用SQLAlchemy来操作MySQL
+
+
+pip install sqlalchemy
+初始化数据库连接
+from sqlalchemy import create_engine
+# 初始化数据库连接，修改为你的数据库用户名和密码
+engine = create_engine('mysql+mysqlconnector://root:password@localhost:3306/wucai')
+mysql+mysqlconnector，后面的是用户名:密码@IP地址:端口号/数据库名称。
+
+创建模型
+# 定义Player对象:
+class Player(Base):
+    # 表的名字:
+    __tablename__ = 'player'
+ 
+    # 表的结构:
+    player_id = Column(Integer, primary_key=True, autoincrement=True)
+    team_id = Column(Integer)
+    player_name = Column(String(255))
+    height = Column(Float(3,2))
+    
+from sqlalchemy import Column, String, Integer, Float
+对数据表进行增删改查
+# 创建DBSession类型:
+DBSession = sessionmaker(bind=engine)
+# 创建session对象:
+session = DBSession()
+
+
+# 创建Player对象:
+new_player = Player(team_id = 1003, player_name = "约翰-科林斯", height = 2.08)
+# 添加到session:
+session.add(new_player)
+# 提交即保存到数据库:
+session.commit()
+# 关闭session:
+session.close()
+
+#增加to_dict()方法到Base类中
+def to_dict(self):
+    return {c.name: getattr(self, c.name, None)
+            for c in self.__table__.columns}
+#将对象可以转化为dict类型
+Base.to_dict = to_dict
+# 查询身高>=2.08的球员有哪些
+rows = session.query(Player).filter(Player.height >= 2.08).all()
+print([row.to_dict() for row in rows])
+
+from sqlalchemy import or_
+rows = session.query(Player).filter(or_(Player.height >=2.08, Player.height <=2.10)).all()
+
+from sqlalchemy import func
+rows = session.query(Player.team_id, func.count(Player.player_id)).group_by(Player.team_id).having(func.count(Player.player_id)>5).order_by(func.count(Player.player_id).asc()).all()
+print(rows)
